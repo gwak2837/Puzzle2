@@ -1,0 +1,209 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#define LENGTH 5    //자연수
+
+/*
+int arr[4][4] = {
+        {8,  9,  6,  10},
+        {12, 13, 0,  15},
+        {11, 3,  14, 2},
+        {7,  4,  5,  1}
+};
+ */
+
+void rule(int arr[][4], int button);
+int check(int arr[][4]);
+int array_addition(int arr[LENGTH]);
+
+int main()
+{
+    int i = 0;
+    int button[LENGTH];
+    for (i = 0; i < LENGTH; i++)
+        button[i] = 1;
+
+    while(1)
+    {
+        int result[LENGTH] = {};
+        int arr[4][4] = {
+                {8,  9,  6,  10},
+                {12, 13, 0,  15},
+                {11, 3,  14, 2},
+                {7,  4,  5,  1}
+        };
+
+        for (i = 0; i < LENGTH; i++)
+        {
+            if (check(arr) == 1)
+            {
+                printf("\n성공!\n");
+                break;
+            }
+            rule(arr, button[i]);
+            result[i] = button[i];
+        }
+
+        printf("결과 : %2d", result[0]);    //결과 출력 (성공한 결과만 출력하려면 Line 41에 삽입, 모든 결과를 출력하려면 Line 47에 삽입)
+        for (i = 1; i < LENGTH; i++)
+        {
+            if (result[i] != 0) printf(", %2d", result[i]);
+            else break;
+        }
+        printf("\n");
+
+        if(check(arr) == 1) break;
+
+        if (array_addition(button) == -1)
+        {
+            printf("\n모든 경우를 조사했습니다.");
+            return 0;
+        }
+    }
+    return 0;
+}
+
+void rule(int arr[][4], int button)    //퍼즐의 기본 룰
+{
+    int temp;
+    switch(button)
+    {
+        case 16:
+            temp = arr[0][0];
+            arr[0][0] = arr[0][1];
+            arr[0][1] = arr[0][2];
+            arr[0][2] = arr[0][3];
+            arr[0][3] = temp;
+            break;
+        case 1:
+            temp = arr[0][2];
+            arr[0][2] = arr[0][1];
+            arr[0][1] = arr[0][0];
+            arr[0][0] = arr[0][3];
+            arr[0][3] = temp;
+            break;
+        case 2:
+            temp = arr[1][0];
+            arr[1][0] = arr[1][1];
+            arr[1][1] = arr[1][2];
+            arr[1][2] = arr[1][3];
+            arr[1][3] = temp;
+            break;
+        case 3:
+            temp = arr[1][3];
+            arr[1][3] = arr[1][2];
+            arr[1][2] = arr[1][1];
+            arr[1][1] = arr[1][0];
+            arr[1][0] = temp;
+            break;
+        case 4:
+            temp = arr[2][0];
+            arr[2][0] = arr[2][1];
+            arr[2][1] = arr[2][2];
+            arr[2][2] = arr[2][3];
+            arr[2][3] = temp;
+            break;
+        case 5:
+            temp = arr[2][3];
+            arr[2][3] = arr[2][2];
+            arr[2][2] = arr[2][1];
+            arr[2][1] = arr[2][0];
+            arr[2][0] = temp;
+            break;
+        case 6:
+            temp = arr[3][0];
+            arr[3][0] = arr[3][1];
+            arr[3][1] = arr[3][2];
+            arr[3][2] = arr[3][3];
+            arr[3][3] = temp;
+            break;
+        case 7:
+            temp = arr[3][3];
+            arr[3][3] = arr[3][2];
+            arr[3][2] = arr[3][1];
+            arr[3][1] = arr[3][0];
+            arr[3][0] = temp;
+            break;
+        case 8:
+            temp = arr[3][0];
+            arr[3][0] = arr[2][0];
+            arr[2][0] = arr[1][0];
+            arr[1][0] = arr[0][0];
+            arr[0][0] = temp;
+            break;
+        case 9:
+            temp = arr[0][0];
+            arr[0][0] = arr[1][0];
+            arr[1][0] = arr[2][0];
+            arr[2][0] = arr[3][0];
+            arr[3][0] = temp;
+            break;
+        case 10:
+            temp = arr[3][1];
+            arr[3][1] = arr[2][1];
+            arr[2][1] = arr[1][1];
+            arr[1][1] = arr[0][1];
+            arr[0][1] = temp;
+            break;
+        case 11:
+            temp = arr[0][1];
+            arr[0][1] = arr[1][1];
+            arr[1][1] = arr[2][1];
+            arr[2][1] = arr[3][1];
+            arr[3][1] = temp;
+            break;
+        case 12:
+            temp = arr[3][2];
+            arr[3][2] = arr[2][2];
+            arr[2][2] = arr[1][2];
+            arr[1][2] = arr[0][2];
+            arr[0][2] = temp;
+            break;
+        case 13:
+            temp = arr[0][2];
+            arr[0][2] = arr[1][2];
+            arr[1][2] = arr[2][2];
+            arr[2][2] = arr[3][2];
+            arr[3][2] = temp;
+            break;
+        case 14:
+            temp = arr[3][3];
+            arr[3][3] = arr[2][3];
+            arr[2][3] = arr[1][3];
+            arr[1][3] = arr[0][3];
+            arr[0][3] = temp;
+            break;
+        case 15:
+            temp = arr[0][3];
+            arr[0][3] = arr[1][3];
+            arr[1][3] = arr[2][3];
+            arr[2][3] = arr[3][3];
+            arr[3][3] = temp;
+            break;
+        default:
+            printf("유효한 입력이 아닙니다.\n");
+            break;
+    }
+}
+
+int check(int arr[][4])    //퍼즐이 완성됐는지 확인
+{
+    for (int i = 0; i < 16; i++)
+        if(arr[0][i] != i) return 0;
+    return 1;    //성공하면 1을 반환
+}
+
+int array_addition(int arr[LENGTH])
+{
+    arr[0] += 1;
+    for (int i = 0; i < LENGTH; i++)
+    {
+        if (arr[LENGTH-1] == 17)
+            return -1;
+        if (arr[i] == 17)
+        {
+            arr[i] = 1;
+            arr[i + 1] += 1;
+        }
+    }
+}
